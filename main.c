@@ -7,7 +7,7 @@
 
 // Qesto programma contiene una struttura lista in grado di
 // contenere più tipi di variabile
-// Per ora solo interi e caratteri
+// Per ora solo interi caratteri e stringhe
 
 // definisco le strutture lista e nodo
 typedef struct node {
