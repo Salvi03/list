@@ -46,7 +46,6 @@ void baseAdd(list_t *list) {
     int index = ptr->index;
     while (ptr->next != NULL) {   
         ptr = ptr->next;
-        
         index = ptr->index;
     }
 
@@ -98,9 +97,8 @@ void addChar(list_t *list, char item) {
     list_t *ptr = list;
 
     baseAdd(list);
-    while (ptr->next != NULL) {    
+    while (ptr->next != NULL)    
         ptr = ptr->next;
-    }
 
     setVal(ptr, c);
     node_t *n = ptr->val;
@@ -109,12 +107,35 @@ void addChar(list_t *list, char item) {
     *((char *)n->val) = item;
 }
 
+void addString(list_t *list, char* string) {
+    char c[] = "string";
+    list_t *ptr = list;
+
+    baseAdd(list);
+    while (ptr->next != NULL)
+        ptr = ptr->next;
+    
+    setVal(ptr, c);
+    node_t *n = ptr->val;
+
+    n->val = (char*)calloc(strlen(string), sizeof(char) + 1);
+    
+    int i;
+    for (i = 0; i < strlen(string); i++)
+        *((char*)(n->val + i)) = *(string + i);
+    
+    *((char*)(n->val + i)) = '\0';
+}
+
 void printElement(node_t *node) {
     if (strcmp(node->type, "char") == 0)
                 printf("%c\n", *((char*)node->val));
             
     if (strcmp(node->type, "int") == 0)
         printf("%d\n", *((int*)node->val));
+    
+    if (strcmp(node->type, "string") == 0)
+        printf("%s\n", (char*)node->val);
 }
 
 void printList(list_t* list) {
@@ -148,6 +169,7 @@ int main() {
     addChar(list, '2');
     addInt(list, 6);
     addChar(list, 'p');
+    addString(list, "Ciao");
 
     printList(list);
     printf("\n\n");
