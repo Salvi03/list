@@ -18,7 +18,8 @@ typedef struct node {
 typedef struct list {
     struct list *prev;
     struct list *next;
-    
+    struct list *last;
+
     int index;
     node_t *val;
 } list_t;
@@ -50,6 +51,7 @@ void baseAdd(list_t *list) {
     }
 
     ptr->next = (list_t*)malloc(sizeof(list_t));
+    list->last = ptr->next;
     list_t *next = ptr->next;
     
     next->next = NULL;
@@ -57,9 +59,8 @@ void baseAdd(list_t *list) {
     next->val = NULL;
     next->index = ptr->index + 1;
 
-    if (ptr->index == -1 || ptr->index == 0) {
+    if (ptr->index == -1 || ptr->index == 0)
         ptr->prev = NULL;
-    }
 }
 
 void setVal(list_t *ptr, char *type) {
@@ -151,9 +152,7 @@ void printList(list_t* list) {
 }
 
 void printReversedList(list_t *list) {
-    list_t *ptr = list;
-    while (ptr->next != NULL)
-        ptr = ptr->next;
+    list_t *ptr = list->last;
     
     while (ptr != NULL) {
         node_t *node = ptr->val;
